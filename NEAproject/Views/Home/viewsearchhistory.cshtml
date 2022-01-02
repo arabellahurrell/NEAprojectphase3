@@ -1,0 +1,66 @@
+﻿@using NEAproject.Models
+@model List<Searchhistory>
+@{
+    //Layout = null;
+   ViewBag.Title = "Compare Multiple Lines";
+}
+@{
+
+    //var chart = new Chart(width: 600, height: 400, theme: ChartTheme.Blue).AddTitle("Graphtest").AddSeries(name: "Taste", xValue: new[] {"1", "2","3","4","5"}, yValues: new[] {"1", "2","3","4","5"}).Write();
+}
+
+            <div class="jumbotron">
+                <h1>@ViewBag.Title</h1>
+                @*title of page*@
+
+            </div>
+@*//table to dispaly the saved search history for logged in user*@
+            <table class="table table-bordered table-responsive">
+                
+                <tr>
+                    <th>
+                        value of n
+                    </th>
+                    <th>
+                        algorithm name 
+                    </th>
+                    <th>
+                        page name
+                    </th>
+                    <th>
+                        Created Time
+                    </th>
+                    <th>
+                        action
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Valueofn
+                        </td>
+                        <td>
+                            @item.Algorithmname
+                        </td>
+                        <td>
+                            @item.Pagename
+                        </td>
+                        <td>
+                            @item.Timecreated.Value.ToString("dd MMM yyyy hh:mm:ss")
+                        </td>
+                        <td>
+                            @*button to actually view the search history for graph or comparision graph*@
+                            <form method="post">
+                                <input type="hidden" name="searchid" value="@item.Searchid" />
+                                <input type="submit" value="view" class="btn btn-primary">
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+           
+    
+
+
+    

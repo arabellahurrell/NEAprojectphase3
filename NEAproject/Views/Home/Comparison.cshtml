@@ -1,0 +1,137 @@
+﻿@using NEAproject.Models
+@model homemodel
+@{
+    //Layout = null;
+   ViewBag.Title = "Compare Multiple Lines";
+}
+@{
+
+    //var chart = new Chart(width: 600, height: 400, theme: ChartTheme.Blue).AddTitle("Graphtest").AddSeries(name: "Taste", xValue: new[] {"1", "2","3","4","5"}, yValues: new[] {"1", "2","3","4","5"}).Write();
+}
+
+            <div class="jumbotron">
+                <h1>@ViewBag.Title</h1>
+
+            </div>
+
+            @*@using (Html.BeginForm("Comparison", "Home", FormMethod.Post, new { id = "form1" }))
+                {*@
+@*form for generating comparison graph depending on value of n*@ 
+<form id="form1" method="post">
+    <div class="row">
+        <div class="col-lg-2">
+            please input the value of N that you want
+            @*label for user input for value of n*@
+        </div>
+        <div class="col-lg-10">
+            @*textbox form control for userinput value of n*@ 
+            @Html.TextBoxFor(m => m.valueofn, new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <input type="submit" value="submit" class="btn btn-primary">
+            @*submit button to post the page with values*@ 
+        </div>
+    </div>
+
+    @if (Model.valueofn > 0)
+
+    {
+        //only show submit buttons if value of n is valid input
+        <div class="row">
+            <div class="col-lg-12">
+                <br />
+                @*button to save the search history for comparison*@ 
+                <input type="submit" value="Save Report" name="Save" class="btn btn-primary">
+            </div>
+        </div>
+            if (ViewData["historyalreadyexist"] != null && !string.IsNullOrEmpty(ViewData["historyalreadyexist"].ToString()))
+            {
+          //if history already exists then show alert message 
+                            <div class="row">
+                                <div class="alert alert-info alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" area-label="close">
+                                        <span aria-hidden="true">
+                                            &times;
+                                        </span>
+                                    </button>
+                                    This value and complexity has already been saved!
+                                </div>
+
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <br />
+                                <input type="button" value="print to pdf" name="printtopdf" class="btn btn-primary float-right" onclick="window.print();">
+                            @*button to trigger print to pdf for a generated graph*@
+                            </div>
+                        </div>
+                    }
+                </form>
+                            @*}*@
+
+@*container for graph*@
+            <div id="chartContainer" style="height: 500px ; width : 100%;"> </div>
+
+@*colour code for complexity on the comparison graph*@
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-green">
+                        This is the line O(n)
+                    </div>
+                    <div class="text-blue">
+                        This is the line O(n^2)
+                    </div>
+                    <div class="text-red">
+                        This is the line O(2^n)
+                    </div>
+                    <div class="text-black">
+                        This is the line O(logn)
+                    </div>
+                    <div class="text-yellow">
+                        This is the line O(nlogn)
+                    </div>
+                </div>
+            </div>
+
+
+
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            @*adds script for canvas js*@
+@*java script code for rendering the graph*@
+            <script>
+    window.onload = function(){
+              var chart = new CanvasJS.Chart("chartContainer",{
+                  animationEnabled: true,
+                  theme: "light2",title: {
+                      text: "Graph"
+                  }, data: [{
+                      name : "O(n)" , type: "spline", name:"c", lineColor: "green", dataPoints: @Html.Raw(ViewBag.datapointlist)
+                  },{
+                          name: "O(n^2)", type: "spline", name: "c", lineColor: "blue", dataPoints: @Html.Raw(ViewBag.datapointlist1)
+                                            },
+                  {
+                      name: "O(2^n)", type: "spline", name: "c", lineColor: "red", dataPoints: @Html.Raw(ViewBag.datapointlist2)
+                                    },
+                  {
+                      name: "O(log(n))", type: "spline", name: "c", lineColor: "black", dataPoints: @Html.Raw(ViewBag.datapointlist3)
+                                                      },
+                  {
+                      name: "O(nlog(n))", type: "spline", name: "c", lineColor: "yellow", dataPoints: @Html.Raw(ViewBag.datapointlist4)
+                                                      }
+                                    ]
+              });
+        chart.render();
+        //write comment same as C#
+          chart = {};
+        }
+            </script>
+
+
+
+
+

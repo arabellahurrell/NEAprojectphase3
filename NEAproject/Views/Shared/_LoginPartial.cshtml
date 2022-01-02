@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@*adding reference of identity from asp netcore*@
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@*injecting objects using dependency injection registered via startup*@ 
+
+<ul class="navbar-nav">
+    @*navigation list for login or logout functionality*@ 
+@if (SignInManager.IsSignedIn(User))
+    //if user is already signed in then show the links for the file management and logout button 
+{
+    <li class="nav-item">
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+        }
+        else
+        { /*if the user is not logged in then show options or links for register user and login */
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+</ul>

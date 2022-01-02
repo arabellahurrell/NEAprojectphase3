@@ -1,0 +1,140 @@
+﻿@using NEAproject.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@model homemodel
+@{
+    ViewBag.Title = "Big O Notation";
+}
+@{
+
+    //var chart = new Chart(width: 600, height: 400, theme: ChartTheme.Blue).AddTitle("Graphtest").AddSeries(name: "Taste", xValue: new[] {"1", "2","3","4","5"}, yValues: new[] {"1", "2","3","4","5"}).Write();
+}
+<div class="row col-12 col-sm-12 text-center">
+    <h1>@ViewBag.Title</h1>
+
+</div>
+
+@*@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "form1" }))
+    {*@
+<form id="form1" method="post">
+    @*form to generate graph depending on selected complexity and value of n*@ 
+    <div class="row">
+        <div class="col-sm-4">
+            please choose the complexity that you want
+            @*label for select complexity dropdown*@ 
+        </div>
+        <div class="col-sm-8">
+            @*drop down list with data populated using get complexity data helper function*@
+            @Html.DropDownListFor(m => m.selectcomplexity, homemodel.getcomplexity(), "Please select complexity", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row col-sm-12">
+        <br>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            please input the value of N that you want
+            @*label for value of n*@
+        </div>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.valueofn, new { @class = "form-control" })
+            @*form control for textbox give value of n*@ 
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <input type="submit" value="submit" class="btn btn-primary">
+            @*submit button to post form with values*@
+
+        </div>
+    </div>
+
+    @if (Model.valueofn > 0 && (!String.IsNullOrEmpty(Model.selectcomplexity)))
+        //only show saved search history if form has the value of n and the complexity 
+    {
+    if (SignInManager.IsSignedIn(User)){
+//only allowed to save if user is logged in  
+    <div class="row">
+        <div class="col-lg-12">
+            <br />
+            <input type="submit" value="Save Report" name="Save" class="btn btn-primary">
+        @*submit button to see search history for a particular complexity*@ 
+        </div>
+    </div>
+    if (ViewData["historyalreadyexist"]!=null && !string.IsNullOrEmpty(ViewData["historyalreadyexist"].ToString()))
+    {
+                //checks for any warning or error message for history already exists in database
+<div class="row">
+    @*show error message for history already existing in database*@
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" area-label="close">
+            <span aria-hidden="true">
+                &times;
+            </span>
+        </button>
+        This value and complexity has already been saved!
+    </div>
+
+</div>
+    }
+}
+    <div class="row">
+        <div class="col-lg-12">
+            <br />
+            <input type="button" value="print to pdf" name="printtopdf" class="btn btn-primary float-right" onclick="window.print();">
+        @*button to trigger print to pdf*@ 
+        </div>
+    </div>
+    }
+</form>
+@*}*@
+
+<div id="chartContainer" style="height: 500px ; width : 100%;"> </div>
+@*container for graph*@
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+@*javascript library can pass library for rendering the graph*@ 
+@if (ViewData["Loginsuccessful"]!=null && !string.IsNullOrEmpty(ViewData["Loginsuccessful"].ToString()))
+    {
+    //show alert box if user succesfil flag is true
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" area-label="close">
+        <span aria-hidden="true">
+            &times;
+        </span>
+    </button>
+    you have successfully logged in!
+</div>
+}
+@section header {
+
+
+    @if (ViewBag.datapointlist != null)
+    {
+        //only fill up the grapoh container if view bag for data points are not empty 
+    <script>
+        window.onload = function () {
+     //filling out the data for the graph with json values with have in viewbag
+     var chart = new CanvasJS.Chart("chartContainer",{
+         animationEnabled: true,
+         theme: "light2",title: {
+             text: "Graph"
+         }, data: [{
+             type: "spline", name:"a", dataPoints: @Html.Raw(ViewBag.datapointlist)
+         }]
+     });
+            chart.render();
+        }
+        //actually render graph on screen 
+
+    </script>
+    }
+
+}
+
+@* create slect list in c# with helper function user defined, and needs to *@
+@* place it in the viewbag, and on cshtml page *@
+@* @Html.DropdownListFor(m=>m.selectComplexity, viewbag.nameofviewbagcreated) *@

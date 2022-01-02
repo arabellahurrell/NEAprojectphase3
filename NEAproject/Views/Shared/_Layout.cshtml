@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+@*this is the master page that will be used along the application on every page*@ 
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NEAproject</title>
+    @*title of the application for each page*@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css?v=1.0" />
+    @*adding the refernce for stylesheets*@
+    @RenderSection("header", required: false)
+    @*place holder for head tag so that we can inject any references for the code in head tag*@
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-fixed-top">
+            @*navigation menu bar fro whole application*@
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NEAproject</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    @*using bootstrap responsivness functionality collapse and uncollapse menu on nevaigation bar depending on screen size*@ 
+                    <partial name="_LoginPartial" />
+                    @*calling partial view named as _loginpartial for login or logout menu*@ 
+                    <ul class="navbar-nav flex-grow-1">
+                        @*links for navigation bar*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About the Big O algorithm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Comparison">Compare multiple lines</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="viewsearchhistory">Saved Search History</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </nav>
+</header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @*main body container*@ 
+            @RenderBody()
+            @*placeholder for rendering the main contained body from each and every page depending on the current views /pages *@
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        @*div for footer*@
+        <div class="container">
+            &copy; 2021 - NEAproject 
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @*references for javascript /library*@ 
+    @RenderSection("Scripts", required: false)
+    @*placeholder for adding any references or code at the end of the page from each and every view and pages which will use this as a master page.*@
+</body>
+</html>
