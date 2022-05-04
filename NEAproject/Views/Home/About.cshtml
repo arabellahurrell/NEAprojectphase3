@@ -2,9 +2,94 @@
     ViewBag.Title = "About Big O algorithm";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+@*<h3>@ViewBag.Message</h3>*@
 
-<p>Use this area to provide additional information.</p>
-<a asp-controller="Home" asp-action="RenderGraph" class="btn btn-primary">
-    convert home page to pdf
-</a>
+@*<a asp-controller="Home" asp-action="RenderGraph" class="btn btn-primary">
+        convert home page to pdf
+    </a>*@
+<p>
+    To find the Big O of an algorithm, you need to focus on expressing the order of growth of
+    its most significant part. This relies on the fact that for large input values, one part of the time
+    complexity of a problem will dominate over the other parts, i.e. it will make their effect on the time
+    complexity insignificant. For example, linear search is an algorithm that has a time complexity of 2, n,
+    plus, 3,2n+3. This is because there are 3 operations (variable assignments) that take place. Once at the
+    start of the algorithm — a loop that repeats a maximum n,n times. With each iteration of the loop, two main
+    operations take place: an if statement and a variable assignment.
+</p>
+<br />
+<p>
+    The following table shows that as the size of n,n increases, the plus, 3,+3
+    factor becomes more and more insignificant to the overall time taken.
+</p>
+
+<br />
+<br />
+<br />
+<table>
+    <tr>
+        <th>n</th>
+        <th>2n+3</th>
+
+    </tr>
+    <tr>
+        <td>1000</td>
+        <td>2003</td>
+
+    </tr>
+    <tr>
+        <td>1,000,000</td>
+        <td>2,000,003</td>
+
+    </tr>
+    <tr>
+        <td>1,000,000,000</td>
+        <td>2,000,000,003</td>
+
+    </tr>
+</table>
+
+<br />
+<br />
+<br />
+
+<p>
+    Therefore, to compare algorithms against each other, you can find the term with the biggest effect and ignore all other terms. So given an algorithm with a time complexity of 3n^3
+
+    +4n^2
+
+    +9n+101, the dominant part is the 3n^3
+    3
+    .
+
+    Now, as the aim is to compare the general performance of an algorithm, the factor that makes the most impact is n^3
+
+    , and so you can ignore the constant number +3 that is used in 3n^2
+
+    .
+
+    This means that in Big O notation, the algorithm with an exact time complexity of 3n^3
+
+    +4n^2
+
+    +9n+101 would just be described as being O(n^3)
+    ). So to write an algorithm’s complexity in Big O notation, you would write a capital O and in brackets include the most significant term involved in its complexity. In the above example, you would show that the algorithm exhibits an order of growth of "Big O of n^3".
+</p>
+<br />
+<p>
+    The time complexity of a given algorithm can be classified into one of the following categories (listed in order of increasing complexity):
+</p>
+
+<img src="https://miro.medium.com/max/1380/1*ClpvAq3oZMuze2EuEF56cQ.png" />
+
+<p>
+    When comparing two algorithms, the lower the time complexity, the better the algorithm will perform as the input grows. To state which is best, work out their Big O values and select the lowest. If you have two algorithms with the same worst-case time complexity, you may need to look at more detail, as one may still be more efficient than another. You could also look at space complexity or the average-case time complexity.
+
+</p>
+
+<p>
+    Here is a list of sorting and searching algorithms and their time complexities
+</p>
+<img src="https://he-s3.s3.amazonaws.com/media/uploads/c950295.png" />
+
+
+<iframe width="720" height="450" src="https://www.youtube.com/embed/__vX2sjlpXU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
